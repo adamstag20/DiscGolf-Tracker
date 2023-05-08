@@ -1,5 +1,6 @@
 import {FastifyInstance, FastifyReply, FastifyRequest} from "fastify";
 import {User} from "./db/entities/User.js";
+import { Round } from "./db/entities/Rounds.js";
 import {ICreateUsersBody} from "./types.js";
 
 async function DoggrRoutes(app: FastifyInstance, _options = {}) {
@@ -100,6 +101,39 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 			console.error(err);
 			reply.status(500).send(err);
 		}
+	});
+
+
+    ////////////////////////////////////////////////////////////
+	// Round Add
+	app.post<{Body: { user: string, course: string, scorecard: number[][] }}>("/game", async (req, reply) => {
+		const { user, course, scorecard} = req.body;
+		
+		try {
+
+			// make sure that the matchee exists & get their user account
+			const player = await req.em.findOne(User, { email: user });
+
+			//create a new match between them
+			const newGame = await req.em.create(Round, {
+				player,
+				course,
+				scorecard
+			});
+
+			//persist it to the database
+			await req.em.flush();
+			// send the match back to the user
+			return reply.send(newGame);
+		} catch (err) {
+			console.error(err);
+			return reply.status(500).send(err);
+		}
+
+	});
+    // GET GAMES
+	app.get("/game", async (request: FastifyRequest, reply: FastifyReply) => {
+		return request.em.find(Round, {});
 	});
 	
 }
