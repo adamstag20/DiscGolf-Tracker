@@ -105,7 +105,7 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 
 
     ////////////////////////////////////////////////////////////
-	// Round Add
+	// ADD GAME
 	app.post<{Body: { user: string, course: string, scorecard: number[][] }}>("/game", async (req, reply) => {
 		const { user, course, scorecard} = req.body;
 		
@@ -131,7 +131,8 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 		}
 
 	});
-    // GET GAMES
+	
+    // GET ALL GAMES
 	app.get("/game", async (request: FastifyRequest, reply: FastifyReply) => {
 		return request.em.find(Round, {});
 	});
