@@ -13,8 +13,8 @@ function App() {
       <div className="App">
         <nav>
           <div className="menu">
-            <Link to="/">Home</Link> ||
-            <Link to="/match">Match</Link>
+            <Link className="nav-item" to="/">Home</Link>
+            <Link className = "nav-itme" to="/match">Match</Link>
           </div>
         </nav>
 
