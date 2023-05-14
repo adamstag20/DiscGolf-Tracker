@@ -1,0 +1,30 @@
+
+.courseView {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    background-color: #808080;
+    border-style: solid;
+    border-width: 7px;
+    border-color: whitesmoke;
+}
+h1 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    color: whitesmoke;
+}
+h2 {
+    margin-bottom: 0px;
+}
+
+.course {
+    margin: 0px;
+    padding: 5px 0px 5px 30px;
+}
+.course:hover {
+    background-color: rgb(216, 210, 17);
+    color:black;
+    cursor: pointer
+}
