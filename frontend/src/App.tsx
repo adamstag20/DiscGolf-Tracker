@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
 import { Home, Match } from './Components';
+import StartGame from './StartGame';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './styles/App.css'
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/match" element={<Match />} />
+          <Route path="/start/:id" element={<StartGame />} />
         </Routes>
 
       </div>
