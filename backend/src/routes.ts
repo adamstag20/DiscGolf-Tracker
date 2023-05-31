@@ -136,6 +136,19 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 	app.get("/game", async (request: FastifyRequest, reply: FastifyReply) => {
 		return request.em.find(Round, {});
 	});
+
+	app.search<{Body: { user: string, course: string}}>("/game", async (req, reply) => {
+		const { player} = req.body;
+		
+		try {
+			const player_games = await req.em.find(Round, { player});
+			return reply.send(player_games);
+		} catch (err) {
+			console.error(err);
+			return reply.status(500).send(err);
+		}
+
+	});
 	
 }
 
