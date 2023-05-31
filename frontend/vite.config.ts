@@ -14,15 +14,18 @@ for (const [key, value] of Object.entries(envVars)) {
 export default defineConfig(({ command, mode }) => {
 	// Load env file based on `mode` in the current working directory.
 	// Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-	const env = loadEnv(mode, process.cwd(), '')
+	const alphabet = Array.from(Array(26), (v, k) => {
+		return String.fromCharCode(k + 65);
+	});
 	return {
 		plugins: [react(), tsconfigPaths()],
 		test: {
 			globals: true,
 			environment: "jsdom",
 			setupFiles: "./test/setup.ts",
+
 		},
 		// vite config
-		define,
+		envPrefix: alphabet,
 	}
 })
