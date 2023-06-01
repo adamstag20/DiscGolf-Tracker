@@ -137,8 +137,8 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 		return request.em.find(Round, {});
 	});
 
-	app.search<{Body: { user: string, course: string}}>("/game", async (req, reply) => {
-		const { player} = req.body;
+	app.search<{Body: { player: number } }>("/game", async (req, reply) => {
+		const { player } = req.body;
 		
 		try {
 			const player_games = await req.em.find(Round, { player});

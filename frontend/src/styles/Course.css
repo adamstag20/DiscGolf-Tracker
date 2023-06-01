@@ -66,3 +66,16 @@ h4 {
     cursor: pointer;
     background-color:rgb(216, 210, 17);
 }
+
+.incrementer {
+    text-align: center;
+}
+
+.stroke {
+    font-size: 50px;
+}
+
+button {
+    width: 30px;
+    font-size: 20px;
+}
