@@ -91,8 +91,6 @@ function StartGame() {
 
   }
 
-  console.log(averages);
-
   return (
     <div className="courseView">
       {!start ? (

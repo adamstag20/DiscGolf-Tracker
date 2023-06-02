@@ -61,6 +61,20 @@ h4 {
     padding-bottom: 5px;
     border-radius: 5%;
 }
+.next-button {
+    text-align: center;
+    margin-top: 40px;
+    margin-left: 450px;
+    margin-right: 450px;
+    background-color: rgb(216, 210, 17);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5%; 
+    color: black;
+}
+.next-button {
+    cursor: pointer;
+}
 
 .start-button:hover {
     cursor: pointer;

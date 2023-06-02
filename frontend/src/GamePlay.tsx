@@ -7,12 +7,13 @@ function GamePlay({ course, averages, games }) {
     const [strokes, setStrokes] = useState(0);
     const [best, setBest] = useState(0);
     const [worst, setWorst] = useState(0);
+    const [scorecard, setScorecard] = useState([]);
 
     useEffect(() => {
-        setWorstAndBest(games, course, hole);
-    }, [])
+        setWorstAndBest();
+    }, [hole])
 
-    function setWorstAndBest(games, course, hole) {
+    function setWorstAndBest() {
         let smallest = Number.MAX_SAFE_INTEGER;
         let largest = Number.MIN_SAFE_INTEGER;
         for (let j = 0; j < games.length; j++) {
@@ -36,6 +37,15 @@ function GamePlay({ course, averages, games }) {
         const val = strokes - 1;
         setStrokes(val);
     }
+
+    function nextHole(){
+        const toAdd = [...scorecard, [strokes, course.holes[hole]] ];
+        console.log("TO ADD -> ", toAdd);
+        setScorecard(toAdd);
+        setHole(hole+1);
+        setStrokes(0);
+
+    }
     return (
         <div>
             <h1 className="start-header">{course.course_name}</h1>
@@ -48,6 +58,9 @@ function GamePlay({ course, averages, games }) {
                 <button onClick={decrementStroke}>-</button>
                 <button onClick={incrementStroke}>+</button>
             </div>
+            <div onClick={nextHole} className="next-button">
+            Next Hole
+          </div>
         </div>
     )
 }
