@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./styles/Course.css"
+import axios from 'node_modules/axios/index';
 
 function GamePlay({ course, averages, games }) {
 
@@ -8,6 +9,7 @@ function GamePlay({ course, averages, games }) {
     const [best, setBest] = useState(0);
     const [worst, setWorst] = useState(0);
     const [scorecard, setScorecard] = useState([]);
+    const [lastHole, setLastHole] = useState(false);
 
     useEffect(() => {
         setWorstAndBest();
@@ -38,13 +40,32 @@ function GamePlay({ course, averages, games }) {
         setStrokes(val);
     }
 
-    function nextHole(){
-        const toAdd = [...scorecard, [strokes, course.holes[hole]] ];
-        console.log("TO ADD -> ", toAdd);
+    function nextHole() {
+        const toAdd = [...scorecard, [strokes, course.holes[hole]]];
         setScorecard(toAdd);
-        setHole(hole+1);
+        if ( course.holes.length == hole + 1){
+            setLastHole(true)
+        }
+        setHole(hole + 1);
         setStrokes(0);
 
+
+    }
+    function finishGame() {
+        const toAdd = [...scorecard, [strokes, course.holes[hole]]];
+        setScorecard(toAdd);
+        // Make post to backend
+        axios.post(`http://0.0.0.0:8080/game`, {
+            user: 'wadam935@gmail.com',
+            course: `${course.course_name}`,
+            scorecard: scorecard
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
     return (
         <div>
@@ -58,9 +79,15 @@ function GamePlay({ course, averages, games }) {
                 <button onClick={decrementStroke}>-</button>
                 <button onClick={incrementStroke}>+</button>
             </div>
-            <div onClick={nextHole} className="next-button">
-            Next Hole
-          </div>
+            {!lastHole ? (
+                <div onClick={nextHole} className="next-button">
+                    Next Hole
+                </div>
+            ) : (
+                <div onClick = {finishGame} className ="finish-button">
+                    Finish Game
+                </div>
+            )}
         </div>
     )
 }

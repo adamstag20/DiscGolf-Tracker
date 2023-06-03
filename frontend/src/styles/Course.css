@@ -75,6 +75,20 @@ h4 {
 .next-button {
     cursor: pointer;
 }
+.finish-button {
+    text-align: center;
+    margin-top: 40px;
+    margin-left: 450px;
+    margin-right: 450px;
+    background-color: green;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5%; 
+    color: black;
+}
+.finish-button:hover {
+    cursor: pointer;
+}
 
 .start-button:hover {
     cursor: pointer;

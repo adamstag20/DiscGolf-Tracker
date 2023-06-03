@@ -15,6 +15,6 @@ export const courses = [
         course_name: "Windy Meadows",
         difficulty: "Medium",
         holes: [3,3,4,3,3,4,3,3,4,4,3,3,3,3,3,3,3,3],
-        description: "Here is a dscription of Windy MEadow"
+        description: "Here is a dscription of Windy Meadow"
     }
 ]
