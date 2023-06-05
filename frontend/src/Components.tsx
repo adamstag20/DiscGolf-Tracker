@@ -1,10 +1,79 @@
 import { courses } from "./assets/Maps";
 import { Link } from "react-router-dom";
 import './styles/Course.css'
+import { useState } from "react";
+import { auth} from "./firebase"
+import {signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
 
-export const Match = () => {
+export const SignIn = () => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const signIn = (e) => {
+		e.preventDefault();
+		signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			console.log(userCredential)
+		}).catch((error)=> {
+			console.log(error)
+		})
+
+	}
 	return(
-		<div>"MATCH PAGE"</div>
+		<div>
+			<form onSubmit={signIn}>
+				<h1>LOGIN</h1>
+				<input 
+				type="email" 
+				placeholder="Enter your email" 
+				value={email}
+				onChange={((e)=> setEmail(e.target.value))}
+				></input>
+				<input 
+				type="password" 
+				placeholder="Enter your password" 
+				value={password}
+				onChange={((e)=> setPassword(e.target.value))}
+				></input>
+				<button type="submit">Log In</button>
+			</form>
+		</div>
+	);
+};
+
+export const SignUp = () => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const signUp = (e) => {
+		e.preventDefault();
+		createUserWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			console.log(userCredential)
+		}).catch((error)=> {
+			console.log(error)
+		})
+
+	}
+	return(
+		<div>
+			<form onSubmit={signUp}>
+				<h1>Create an Account</h1>
+				<input 
+				type="email" 
+				placeholder="Enter your email" 
+				value={email}
+				onChange={((e)=> setEmail(e.target.value))}
+				></input>
+				<input 
+				type="password" 
+				placeholder="Enter your password" 
+				value={password}
+				onChange={((e)=> setPassword(e.target.value))}
+				></input>
+				<button type="submit">Sign Up</button>
+			</form>
+		</div>
 	);
 };
 
