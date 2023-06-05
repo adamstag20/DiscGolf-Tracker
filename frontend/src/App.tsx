@@ -1,16 +1,21 @@
 import { useState } from 'react'
 import { Link, Route, Routes, Router, BrowserRouter } from "react-router-dom";
-import { Home,SignUp } from './Components';
+import { Home, AuthPage } from './Components';
 import StartGame from './StartGame';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './styles/App.css'
+import './styles/Auth.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [authUser, setAuthUser] = useState(false)
 
   return (
-    <BrowserRouter>
+    <div>
+    { !authUser ? (
+        <AuthPage/>
+    ):(
+      <BrowserRouter>
       <div className="App">
         <nav>
           <div className="menu">
@@ -21,12 +26,14 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/match" element={<SignUp />} />
+          <Route path="/match" element={<AuthPage />} />
           <Route path="/start/:id" element={<StartGame />} />
         </Routes>
 
       </div>
     </BrowserRouter>
+    )}
+  </div>
   );
 }
 

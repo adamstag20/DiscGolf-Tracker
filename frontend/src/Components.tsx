@@ -1,49 +1,18 @@
 import { courses } from "./assets/Maps";
 import { Link } from "react-router-dom";
-import './styles/Course.css'
+import './styles/Auth.css'
 import { useState } from "react";
 import { auth} from "./firebase"
 import {signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
 
-export const SignIn = () => {
+
+export const AuthPage = () => {
+
+	const [first, setFirst] = useState('');
+	const [last, setLast] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
-	const signIn = (e) => {
-		e.preventDefault();
-		signInWithEmailAndPassword(auth, email, password)
-		.then((userCredential) => {
-			console.log(userCredential)
-		}).catch((error)=> {
-			console.log(error)
-		})
-
-	}
-	return(
-		<div>
-			<form onSubmit={signIn}>
-				<h1>LOGIN</h1>
-				<input 
-				type="email" 
-				placeholder="Enter your email" 
-				value={email}
-				onChange={((e)=> setEmail(e.target.value))}
-				></input>
-				<input 
-				type="password" 
-				placeholder="Enter your password" 
-				value={password}
-				onChange={((e)=> setPassword(e.target.value))}
-				></input>
-				<button type="submit">Log In</button>
-			</form>
-		</div>
-	);
-};
-
-export const SignUp = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [create, setCreate] = useState(false);
 
 	const signUp = (e) => {
 		e.preventDefault();
@@ -55,10 +24,33 @@ export const SignUp = () => {
 		})
 
 	}
+	const signIn = (e) => {
+		e.preventDefault();
+		signInWithEmailAndPassword(auth, email, password)
+		.then((userCredential) => {
+			console.log(userCredential)
+		}).catch((error)=> {
+			console.log(error)
+		})
+
+	}
 	return(
-		<div>
-			<form onSubmit={signUp}>
+		<div className="auth">
+			{ create ? (
+				<form onSubmit={signUp}>
 				<h1>Create an Account</h1>
+				<input 
+				type="text" 
+				placeholder="Enter your First Name" 
+				value={first}
+				onChange={((e)=> setFirst(e.target.value))}
+				></input>
+				<input 
+				type="text" 
+				placeholder="Enter your Last Name" 
+				value={last}
+				onChange={((e)=> setLast(e.target.value))}
+				></input>
 				<input 
 				type="email" 
 				placeholder="Enter your email" 
@@ -72,7 +64,28 @@ export const SignUp = () => {
 				onChange={((e)=> setPassword(e.target.value))}
 				></input>
 				<button type="submit">Sign Up</button>
+				<text onClick={() => setCreate(false)}>Back to login</text>
 			</form>
+			):(
+				<form onSubmit={signIn}>
+				<h1>Log in!</h1>
+				<input 
+				type="email" 
+				placeholder="Enter your email" 
+				value={email}
+				onChange={((e)=> setEmail(e.target.value))}
+				></input>
+				<input 
+				type="password" 
+				placeholder="Enter your password" 
+				value={password}
+				onChange={((e)=> setPassword(e.target.value))}
+				></input>
+				<button type="submit">Log In</button>
+				<text onClick={() => setCreate(true)}>Create an account</text>
+			</form>
+			)}
+
 		</div>
 	);
 };
