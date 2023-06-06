@@ -4,9 +4,9 @@ import './styles/Auth.css'
 import { useState } from "react";
 import { auth} from "./firebase"
 import {signInWithEmailAndPassword,createUserWithEmailAndPassword} from "firebase/auth";
+import axios from 'node_modules/axios/index';
 
-
-export const AuthPage = () => {
+export const AuthPage = ({setUser}) => {
 
 	const [first, setFirst] = useState('');
 	const [last, setLast] = useState('');
@@ -19,6 +19,10 @@ export const AuthPage = () => {
 		createUserWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			console.log(userCredential)
+			axios.post('http://0.0.0.0:8080/users',{
+				name: `${first} ${last}`,
+				email: `${email}`
+			})
 		}).catch((error)=> {
 			console.log(error)
 		})
@@ -28,7 +32,25 @@ export const AuthPage = () => {
 		e.preventDefault();
 		signInWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
+			// Snag email 
+			console.log(userCredential.user.email)
 			console.log(userCredential)
+			axios.request({
+				url: 'http://0.0.0.0:8080/users',
+				method: 'search',
+				data: {
+					email: `${userCredential.user.email}`
+				}
+			}) 
+			.then(response => {
+				console.log(response.data.id);
+				setUser(response.data.id)
+		
+			  })
+			  .catch(error => {
+				console.log(error.response.data)
+				return error;
+			  });
 		}).catch((error)=> {
 			console.log(error)
 		})

@@ -6,14 +6,28 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './styles/App.css'
 import './styles/Auth.css'
+import { useEffect } from 'react';
 
 function App() {
-  const [authUser, setAuthUser] = useState(false)
+  const [token, setToken] = useState(sessionStorage.getItem('items') || '');
+
+  useEffect(() => {
+      console.log(sessionStorage.getItem('items'));
+
+      const items = JSON.parse(sessionStorage.getItem('items'));
+      if (items) {
+          setToken(items);
+      }
+      else {
+          sessionStorage.setItem('items', JSON.stringify(token));
+      }
+  }, [token]);
 
   return (
     <div>
-    { !authUser ? (
-        <AuthPage/>
+    { !token ? (
+        <AuthPage 
+         setUser = {setToken}/>
     ):(
       <BrowserRouter>
       <div className="App">
@@ -26,7 +40,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/match" element={<AuthPage />} />
+          <Route path="/match" />
           <Route path="/start/:id" element={<StartGame />} />
         </Routes>
 
