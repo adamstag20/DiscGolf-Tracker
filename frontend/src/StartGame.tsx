@@ -47,8 +47,11 @@ function getBest(games){
   return smallest;
 }
 
-function StartGame() {
 
+function StartGame({token}) {
+
+  const items = JSON.parse(sessionStorage.getItem('items'));
+  console.log(items)
   const mapName = useParams();
   const course = getCourse(mapName.id);
   const par = getPar(course);

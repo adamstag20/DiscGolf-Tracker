@@ -106,13 +106,13 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 
     ////////////////////////////////////////////////////////////
 	// ADD GAME
-	app.post<{Body: { user: string, course: string, scorecard: number[][] }}>("/game", async (req, reply) => {
+	app.post<{Body: { user: number, course: string, scorecard: number[][] }}>("/game", async (req, reply) => {
 		const { user, course, scorecard} = req.body;
 		
 		try {
 
 			// make sure that the matchee exists & get their user account
-			const player = await req.em.findOne(User, { email: user });
+			const player = await req.em.findOne(User, { id: user });
 
 			//create a new match between them
 			const newGame = await req.em.create(Round, {

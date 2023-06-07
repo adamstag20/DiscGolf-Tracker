@@ -21,7 +21,7 @@ function App() {
       else {
           sessionStorage.setItem('items', JSON.stringify(token));
       }
-  }, [token]);
+  }, []);
 
   return (
     <div>
@@ -39,9 +39,9 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home token = {token} />} />
           <Route path="/match" />
-          <Route path="/start/:id" element={<StartGame />} />
+          <Route path="/start/:id" element={<StartGame token = {token} />} />
         </Routes>
 
       </div>
