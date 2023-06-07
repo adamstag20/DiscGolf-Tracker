@@ -5,13 +5,14 @@ import FinishGame from './FinishGame';
 
 function GamePlay({ course, averages, games }) {
 
-    const [hole, setHole] = useState(1);
+    const [hole, setHole] = useState(0);
     const [strokes, setStrokes] = useState(0);
     const [best, setBest] = useState(0);
     const [worst, setWorst] = useState(0);
     const [scorecard, setScorecard] = useState([]);
     const [lastHole, setLastHole] = useState(false);
     const [displayScore, setDisplayScore] = useState(false);
+    const items = JSON.parse(sessionStorage.getItem('items'));
 
     useEffect(() => {
         setWorstAndBest();
@@ -45,22 +46,22 @@ function GamePlay({ course, averages, games }) {
     function nextHole() {
         const toAdd = [...scorecard, [strokes, course.holes[hole]]];
         setScorecard(toAdd);
-        if (course.holes.length == hole + 1) {
+        if (course.holes.length-1 == hole + 1) {
             setLastHole(true)
         }
         setHole(hole + 1);
         setStrokes(0);
+        console.log(hole)
 
 
     }
     function finishGame() {
         const toAdd = [...scorecard, [strokes, course.holes[hole]]];
-        setScorecard(toAdd);
         // Make post to backend
         axios.post(`http://0.0.0.0:8080/game`, {
-            user: 'wadam935@gmail.com',
+            user: `${items}`,
             course: `${course.course_name}`,
-            scorecard: scorecard
+            scorecard: toAdd
         })
             .then(function (response) {
                 console.log(response);
@@ -75,7 +76,7 @@ function GamePlay({ course, averages, games }) {
             {!displayScore ? (
                 <div>
                     <h1 className="start-header">{course.course_name}</h1>
-                    <h2 className="start-header">Hole {hole}</h2>
+                    <h2 className="start-header">Hole {hole + 1}</h2>
                     <h3 className="start-header">Par {course.holes[hole]}</h3>
                     <h2 className="start-header">Best {best}</h2>
                     <h2 className="start-header">Worst {worst}</h2>

@@ -51,7 +51,6 @@ function getBest(games){
 function StartGame({token}) {
 
   const items = JSON.parse(sessionStorage.getItem('items'));
-  console.log(items)
   const mapName = useParams();
   const course = getCourse(mapName.id);
   const par = getPar(course);
@@ -71,7 +70,13 @@ function StartGame({token}) {
   }
 
   async function startGame() {
-    const games = await axios.get(`http://0.0.0.0:8080/game`)
+    const games = await axios.request({
+			url: 'http://0.0.0.0:8080/game',
+			method: 'search',
+			data: {
+				player: `${items}`
+			}
+		})
       .then(response => {
         return response.data;
 
@@ -80,17 +85,10 @@ function StartGame({token}) {
         console.log(error.response.data)
         return error;
       });
-    let gamesList = [];
-    for (let i = 0; i < games.length; i++) {
-      if (games[i].player == '1') {
-        if (games[i].course == course.course_name)
-          gamesList = [...gamesList, games[i]];
-      }
-    }
     //console.log(gamesList);A
-    setGames(gamesList);
-    setAverages(getAverages(gamesList,course));
-    setBest(getBest(gamesList));
+    setGames(games);
+    setAverages(getAverages(games,course));
+    setBest(getBest(games));
 
   }
 
