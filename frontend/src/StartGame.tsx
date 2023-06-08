@@ -35,38 +35,46 @@ function getAverages(games,course){
   return averages;
 }
 
-function getBest(games){
-  let smallest = Number.MAX_SAFE_INTEGER
-  for (let i = 0; i < games.length; i++){
-    let amount = 0;
-    for (let j = 0; j < games[0].scorecard.length;j++){
-      amount += Number(games[i].scorecard[j][0]);
-    }
-    if (smallest >= amount){ smallest = amount;}
-  }
-  return smallest;
-}
 
 
 function StartGame({token}) {
 
   const items = JSON.parse(sessionStorage.getItem('items'));
-  const mapName = useParams();
-  const course = getCourse(mapName.id);
-  const par = getPar(course);
 
   const [start, setStart] = useState(false);
   const [best, setBest] = useState(0);
   const [averages, setAverages] = useState([]);
   const [games, setGames] = useState([]);
+  const [mapName, setMapName]= useState(useParams())
+  const [course, setCourse] = useState(getCourse(mapName.id))
+
+  const par = getPar(course);
 
   useEffect(()=>{
         startGame();
+        console.log("MAP NAME", mapName);
 
   },[])
 
   function handleStart(){
     setStart(true);
+  }
+
+  function getBest(games){
+    let smallest = Number.MAX_SAFE_INTEGER
+    for (let i = 0; i < games.length; i++){
+      let amount = 0;
+      if (games[i].course == course.course_name){
+        for (let j = 0; j < games[i].scorecard.length;j++){
+            amount += Number(games[i].scorecard[j][0]);
+          }
+      }
+      if (smallest >= amount && amount != 0){ smallest = amount;}
+    }
+      if (smallest >= 300 || smallest == 0){
+        return null;
+      }
+      return smallest;
   }
 
   async function startGame() {

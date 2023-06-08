@@ -22,11 +22,13 @@ function GamePlay({ course, averages, games }) {
         let smallest = Number.MAX_SAFE_INTEGER;
         let largest = Number.MIN_SAFE_INTEGER;
         for (let j = 0; j < games.length; j++) {
-            if (smallest >= games[j].scorecard[hole][0]) {
-                smallest = games[j].scorecard[hole][0];
-            }
-            if (largest <= games[j].scorecard[hole][0]) {
-                largest = games[j].scorecard[hole][0];
+            if (games[j].course == course.course_name) {
+                if (smallest >= games[j].scorecard[hole][0]) {
+                    smallest = games[j].scorecard[hole][0];
+                }
+                if (largest <= games[j].scorecard[hole][0]) {
+                    largest = games[j].scorecard[hole][0];
+                }
             }
             setBest(smallest);
             setWorst(largest);
@@ -46,7 +48,7 @@ function GamePlay({ course, averages, games }) {
     function nextHole() {
         const toAdd = [...scorecard, [strokes, course.holes[hole]]];
         setScorecard(toAdd);
-        if (course.holes.length-1 == hole + 1) {
+        if (course.holes.length - 1 == hole + 1) {
             setLastHole(true)
         }
         setHole(hole + 1);
@@ -97,8 +99,8 @@ function GamePlay({ course, averages, games }) {
                 </div>
             ) : (
                 <FinishGame
-                course = {course}
-                scorecard = {scorecard} />
+                    course={course}
+                    scorecard={scorecard} />
             )}
 
         </div>

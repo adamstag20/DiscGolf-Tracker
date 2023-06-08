@@ -136,7 +136,8 @@ async function DoggrRoutes(app: FastifyInstance, _options = {}) {
 	app.get("/game", async (request: FastifyRequest, reply: FastifyReply) => {
 		return request.em.find(Round, {});
 	});
-
+   
+	// Search User specific Games
 	app.search<{Body: { player: number } }>("/game", async (req, reply) => {
 		const { player } = req.body;
 		
