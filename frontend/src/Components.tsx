@@ -10,6 +10,8 @@ import axios from 'node_modules/axios/index';
 export const AuthPage = ({ setUser }) => {
 
 	async function searchUser(email) {
+
+		console.log("Hi here")
 		await axios.request({
 			url: 'http://0.0.0.0:8080/users',
 			method: 'search',
@@ -36,7 +38,7 @@ export const AuthPage = ({ setUser }) => {
 	const [password, setPassword] = useState('');
 	const [create, setCreate] = useState(false);
 
-	const signUp = (e) => {
+	function signUp(e) {
 		let grabEmail = email;
 		e.preventDefault();
 		createUserWithEmailAndPassword(auth, email, password)
@@ -46,10 +48,10 @@ export const AuthPage = ({ setUser }) => {
 					name: `${first} ${last}`,
 					email: `${email}`
 				})
-				grabUser(grabEmail)
 			}).catch((error) => {
 				console.log(error)
 			})
+			setCreate(false)
 
 	}
 	function signIn(e) {
@@ -68,10 +70,10 @@ export const AuthPage = ({ setUser }) => {
 
 	}
 
-	async function grabUser(email) {
+	function grabUser(email) {
 		const user = searchUser(email)
 			if (user) { 
-				console.log(user)
+				console.log("Email ->", email);
 				setUser(user) }
 	}
 	return (
@@ -134,7 +136,7 @@ export const AuthPage = ({ setUser }) => {
 	);
 };
 
-export const Home = (token) => {
+export const Home = () => {
 	return (
 		<div>
 			<h1>Select a Course:</h1>

@@ -14,3 +14,13 @@
   color: whitesmoke;
 }
 
+.log-out {
+  display: inline;
+  padding-left: 80%;
+}
+
+.log-out:hover {
+  cursor: pointer;
+  color: rgb(216, 210, 17);
+}
+

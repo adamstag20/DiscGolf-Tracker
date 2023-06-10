@@ -53,7 +53,6 @@ function GamePlay({ course, averages, games }) {
         }
         setHole(hole + 1);
         setStrokes(0);
-        console.log(hole)
 
 
     }
