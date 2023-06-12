@@ -107,3 +107,20 @@ button {
     width: 30px;
     font-size: 20px;
 }
+
+.grid-score {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.birdie {
+    text-align: center;
+    color: green;
+}
+.par {
+    text-align: center;
+    color: yellow;
+}
+.bogey {
+    text-align: center;
+    color: darkred;
+}

@@ -34,7 +34,6 @@ function App() {
         <nav>
           <div className="menu">
             <Link className="nav-item" to="/">Home</Link>
-            <Link className = "nav-item" to="/match">Match</Link>
             <div  className="log-out" onClick={() =>{setToken(null)}}>Log out</div>
           </div>
         </nav>

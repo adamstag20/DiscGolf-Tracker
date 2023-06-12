@@ -14,7 +14,7 @@ export const courses = [
     {
         course_name: "Windy Meadows",
         difficulty: "Medium",
-        holes: [3,3,4,3,3,4,3,3,4,4,3,3,3,3,3,3,3,3],
-        description: "Here is a dscription of Windy Meadow"
+        holes: [3,3,4,3,3,4],
+        description: "Windy Meadows is a small 6-hole course nestled in a made-up prairie. Small straight shots but beware the wind"
     }
 ]

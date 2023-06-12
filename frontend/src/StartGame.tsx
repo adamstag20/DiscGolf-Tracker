@@ -52,7 +52,6 @@ function StartGame({token}) {
 
   useEffect(()=>{
         startGame();
-        console.log("MAP NAME", mapName);
 
   },[])
 
