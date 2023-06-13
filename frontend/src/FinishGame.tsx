@@ -17,8 +17,10 @@ function FinishGame({ course, scorecard }) {
       total += scorecard[i][0];
       throws += scorecard[i][1];
     }
-    return [throws,(total-throws)]
+    return [total]
   }
+
+
   function getRoundPercentage(shotType) {
     let count = 0;
     console.log(scorecard)
@@ -58,7 +60,7 @@ function FinishGame({ course, scorecard }) {
     <div>
       <h1 className="start-header">{course.course_name}</h1>
       <h2 className="start-header">Good Game!</h2>
-      <h2 className="start-header">Total Throws: {score[0]}</h2>
+      <h2 className="start-header">Total Throws: {score}</h2>
       <h2></h2>
       <div className='grid-score'>
         <h2 className="birdie">Birdie % : {birdieRate}</h2>

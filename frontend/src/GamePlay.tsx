@@ -30,7 +30,7 @@ function GamePlay({ course, averages, games }) {
                     largest = games[j].scorecard[hole][0];
                 }
             }
-            if (smallest === Number.MAX_SAFE_INTEGER){
+            if (smallest == Number.MAX_SAFE_INTEGER){
                 setBest(0);
                 setWorst(0);
                 return;

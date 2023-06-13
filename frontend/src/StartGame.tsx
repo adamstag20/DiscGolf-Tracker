@@ -26,12 +26,14 @@ function getAverages(games, course) {
   let averages = [];
   for (let i = 0; i < course.holes.length; i++) {
     let amount = 0;
+    let total = 0;
       for (let j = 0; j < games.length; j++) {
       if (games[j].course == course.course_name) {
         amount += Number(games[j].scorecard[i][0]);
+        total += 1;
       }
     }
-    let avg = Math.round(amount / games.length);
+    let avg = Math.round(amount / total);
     averages = [...averages, avg];
   }
   return averages;
@@ -55,7 +57,7 @@ function StartGame({ token }) {
   useEffect(() => {
     startGame();
 
-  }, [])
+  }, [course])
 
   function handleStart() {
     setStart(true);
@@ -94,7 +96,6 @@ function StartGame({ token }) {
         console.log(error.response.data)
         return error;
       });
-    //console.log(gamesList);A
     setGames(games);
     setAverages(getAverages(games, course));
     setBest(getBest(games));
