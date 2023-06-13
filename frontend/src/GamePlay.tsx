@@ -90,8 +90,8 @@ function GamePlay({ course, averages, games }) {
                     <h1 className="start-header">{course.course_name}</h1>
                     <h2 className="start-header">Hole {hole + 1}</h2>
                     <h3 className="start-header">Par {course.holes[hole]}</h3>
-                    <h2 className="start-header">Best {best}</h2>
-                    <h2 className="start-header">Worst {worst}</h2>
+                    <h2 className="start-header">Best: {best} Worst: {worst}</h2>
+                    <h2 className="start-header"> Average {averages[hole]}</h2>
                     <div className="incrementer">
                         <div className="stroke">{strokes}</div>
                         <button onClick={decrementStroke}>-</button>

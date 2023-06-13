@@ -22,12 +22,14 @@ function getPar(course) {
 }
 
 // Finds users average shot per hole
-function getAverages(games,course){
+function getAverages(games, course) {
   let averages = [];
-  for (let i=0; i < course.holes.length; i++){
+  for (let i = 0; i < course.holes.length; i++) {
     let amount = 0;
-    for (let j=0; j <games.length; j++){
-      amount += Number(games[j].scorecard[i][0]);
+      for (let j = 0; j < games.length; j++) {
+      if (games[j].course == course.course_name) {
+        amount += Number(games[j].scorecard[i][0]);
+      }
     }
     let avg = Math.round(amount / games.length);
     averages = [...averages, avg];
@@ -37,7 +39,7 @@ function getAverages(games,course){
 
 
 
-function StartGame({token}) {
+function StartGame({ token }) {
 
   const items = JSON.parse(sessionStorage.getItem('items'));
 
@@ -45,45 +47,45 @@ function StartGame({token}) {
   const [best, setBest] = useState(0);
   const [averages, setAverages] = useState([]);
   const [games, setGames] = useState([]);
-  const [mapName, setMapName]= useState(useParams())
+  const [mapName, setMapName] = useState(useParams())
   const [course, setCourse] = useState(getCourse(mapName.id))
 
   const par = getPar(course);
 
-  useEffect(()=>{
-        startGame();
+  useEffect(() => {
+    startGame();
 
-  },[])
+  }, [])
 
-  function handleStart(){
+  function handleStart() {
     setStart(true);
   }
 
-  function getBest(games){
+  function getBest(games) {
     let smallest = Number.MAX_SAFE_INTEGER
-    for (let i = 0; i < games.length; i++){
+    for (let i = 0; i < games.length; i++) {
       let amount = 0;
-      if (games[i].course == course.course_name){
-        for (let j = 0; j < games[i].scorecard.length;j++){
-            amount += Number(games[i].scorecard[j][0]);
-          }
+      if (games[i].course == course.course_name) {
+        for (let j = 0; j < games[i].scorecard.length; j++) {
+          amount += Number(games[i].scorecard[j][0]);
+        }
       }
-      if (smallest >= amount && amount != 0){ smallest = amount;}
+      if (smallest >= amount && amount != 0) { smallest = amount; }
     }
-      if (smallest >= 300 || smallest == 0){
-        return null;
-      }
-      return smallest;
+    if (smallest >= 300 || smallest == 0) {
+      return null;
+    }
+    return smallest;
   }
 
   async function startGame() {
     const games = await axios.request({
-			url: 'http://0.0.0.0:8080/game',
-			method: 'search',
-			data: {
-				player: `${items}`
-			}
-		})
+      url: 'http://0.0.0.0:8080/game',
+      method: 'search',
+      data: {
+        player: `${items}`
+      }
+    })
       .then(response => {
         return response.data;
 
@@ -94,7 +96,7 @@ function StartGame({token}) {
       });
     //console.log(gamesList);A
     setGames(games);
-    setAverages(getAverages(games,course));
+    setAverages(getAverages(games, course));
     setBest(getBest(games));
 
   }
@@ -107,15 +109,15 @@ function StartGame({token}) {
           <h3>{course.description}</h3>
           <h2 className="start-header">Par {par} Course</h2>
           <h2 className="start-header"> Personal Best: {best}</h2>
-          <div onClick= {handleStart} className="start-button">
+          <div onClick={handleStart} className="start-button">
             Start Game
           </div>
         </div>
       ) : (
         <GamePlay
-        course = {course}
-        averages = {averages}
-        games = {games}
+          course={course}
+          averages={averages}
+          games={games}
         />
 
       )
